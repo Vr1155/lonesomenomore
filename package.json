@@ -1,0 +1,18 @@
+{
+  "name": "lonesomenomore",
+  "version": "1.0.0",
+  "description": "A CLI chat interface for talking to LLMs via OpenRouter API",
+  "main": "chat.js",
+  "type": "module",
+  "scripts": {
+    "start": "node chat.js",
+    "chat": "node chat.js"
+  },
+  "keywords": ["cli", "chat", "llm", "openrouter", "ai"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.2",
+    "dotenv": "^16.3.1"
+  }
+}

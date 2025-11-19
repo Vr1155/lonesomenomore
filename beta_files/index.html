@@ -1,0 +1,2227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lonesome No More - AI-powered companionship for your loved ones through personalized phone conversations. Peace of mind for families.">
+    <meta name="keywords" content="AI companion, elderly care, loneliness, phone companion, senior care, family peace of mind">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="Lonesome No More - AI Companionship Through Conversation">
+    <meta property="og:description" content="Personalized AI companionship for your loved ones, peace of mind for you.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://lonesomenomore.com/logo.png">
+
+    <title>Lonesome No More - AI Companionship Through Conversation</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Nature-inspired palette optimized for seniors */
+            --primary-color: #5F7A61;        /* Deep sage green - wellness, nature */
+            --secondary-color: #D4735E;      /* Warm terra cotta - warmth, connection */
+            --accent-color: #E8AA6B;         /* Honey amber - optimism, energy */
+            --text-dark: #2C2C2C;            /* Deep charcoal - high contrast */
+            --text-medium: #5A5A5A;          /* Warm gray - readable secondary text */
+            --bg-cream: #FBF8F3;             /* Warm cream - inviting background */
+            --bg-light: #FFFEFB;             /* Soft white with warm tint */
+
+            /* Enhanced shadow system for depth */
+            --shadow-xs: 0 1px 2px rgba(92, 122, 97, 0.05);
+            --shadow-sm: 0 2px 8px rgba(92, 122, 97, 0.08);
+            --shadow-md: 0 4px 16px rgba(92, 122, 97, 0.1);
+            --shadow-lg: 0 8px 24px rgba(92, 122, 97, 0.12);
+            --shadow-xl: 0 12px 32px rgba(92, 122, 97, 0.15);
+            --shadow-2xl: 0 16px 48px rgba(92, 122, 97, 0.18);
+
+            /* Consistent spacing scale (8px base) */
+            --space-xs: 8px;
+            --space-sm: 16px;
+            --space-md: 24px;
+            --space-lg: 32px;
+            --space-xl: 48px;
+            --space-2xl: 64px;
+            --space-3xl: 80px;
+
+            /* Border radius scale */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-2xl: 24px;
+
+            /* Transition timing */
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.8;
+            font-size: 19px;
+            background: var(--bg-cream);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Premium noise texture overlay for depth */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.4;
+        }
+
+        /* Scroll Progress Indicator */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color), var(--secondary-color));
+            z-index: 10000;
+            transition: width 0.1s ease-out;
+            box-shadow: 0 2px 8px rgba(95, 122, 97, 0.3);
+        }
+
+        .scroll-progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: inherit;
+            filter: blur(4px);
+            opacity: 0.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        /* Premium subtle animated orbs in background */
+        @keyframes orb-drift {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(20px, -30px) scale(1.1); }
+            50% { transform: translate(-15px, 20px) scale(0.9); }
+            75% { transform: translate(30px, 10px) scale(1.05); }
+        }
+
+        @keyframes orb-drift-reverse {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(-25px, 20px) scale(0.95); }
+            50% { transform: translate(20px, -25px) scale(1.08); }
+            75% { transform: translate(-15px, -10px) scale(0.92); }
+        }
+
+        /* Header / Hero Section */
+        .hero {
+            text-align: center;
+            padding: 100px 20px 120px;
+            background:
+                radial-gradient(ellipse 150% 100% at 50% 0%, rgba(232, 170, 107, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse 100% 100% at 80% 10%, rgba(95, 122, 97, 0.04) 0%, transparent 50%),
+                radial-gradient(ellipse 100% 100% at 20% 20%, rgba(212, 115, 94, 0.03) 0%, transparent 50%),
+                linear-gradient(135deg,
+                    rgba(95, 122, 97, 0.02) 0%,
+                    rgba(232, 170, 107, 0.01) 50%,
+                    rgba(212, 115, 94, 0.02) 100%);
+            border-bottom: 1px solid rgba(95, 122, 97, 0.12);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            right: -5%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(232, 170, 107, 0.12) 0%, rgba(232, 170, 107, 0.04) 40%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            filter: blur(60px);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -20px) scale(1.05); }
+            66% { transform: translate(-20px, 10px) scale(0.95); }
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -40%;
+            left: -5%;
+            width: 550px;
+            height: 550px;
+            background: radial-gradient(circle, rgba(95, 122, 97, 0.1) 0%, rgba(95, 122, 97, 0.03) 40%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            filter: blur(50px);
+            animation: float 25s ease-in-out infinite reverse;
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            font-family: 'Merriweather', serif;
+            font-size: 3.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            letter-spacing: -0.03em;
+            animation: fadeInDown 0.8s ease-out;
+            text-shadow: 0 2px 8px rgba(95, 122, 97, 0.08);
+        }
+
+        .logo-image {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 12px rgba(95, 122, 97, 0.15));
+            transition: transform var(--transition-base);
+        }
+
+        .logo:hover .logo-image {
+            transform: scale(1.05);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo i {
+            color: var(--secondary-color);
+            animation: heartbeat 2s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            10%, 30% { transform: scale(1.1); }
+            20%, 40% { transform: scale(1); }
+        }
+
+        .tagline {
+            font-family: 'Merriweather', serif;
+            font-size: 2.2rem;
+            color: var(--text-dark);
+            font-weight: 400;
+            margin-bottom: 24px;
+            line-height: 1.35;
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+            max-width: 850px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .subheading {
+            font-size: 1.25rem;
+            color: var(--text-medium);
+            max-width: 720px;
+            margin: 0 auto;
+            font-weight: 400;
+            line-height: 1.75;
+            animation: fadeInUp 0.8s ease-out 0.4s backwards;
+        }
+
+        /* Main Content Sections */
+        section {
+            padding: var(--space-3xl) var(--space-md);
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Merriweather', serif;
+            font-size: 2.4rem;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: var(--space-2xl);
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -16px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent-color), var(--secondary-color));
+            border-radius: 3px;
+            box-shadow:
+                0 2px 8px rgba(232, 170, 107, 0.3),
+                0 4px 16px rgba(212, 115, 94, 0.2);
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            bottom: -16px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent-color), var(--secondary-color));
+            border-radius: 3px;
+            filter: blur(8px);
+            opacity: 0.4;
+        }
+
+        .intro {
+            background: var(--bg-light);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(95, 122, 97, 0.08);
+            transition: box-shadow var(--transition-base);
+        }
+
+        .intro:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .intro-content {
+            max-width: 900px;
+            margin: 0 auto;
+            font-size: 1.3rem;
+            text-align: center;
+            color: var(--text-dark);
+            line-height: 1.85;
+            font-weight: 400;
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            background: transparent;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 35px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 980px) {
+            .steps-grid {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
+        }
+
+        .step-card {
+            background: var(--bg-light);
+            padding: var(--space-xl) var(--space-lg);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            box-shadow:
+                0 1px 3px rgba(95, 122, 97, 0.04),
+                0 4px 12px rgba(95, 122, 97, 0.06),
+                inset 0 -1px 0 rgba(95, 122, 97, 0.04);
+            border: 1px solid rgba(95, 122, 97, 0.08);
+            transition: all var(--transition-base);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform var(--transition-base);
+        }
+
+        .step-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top right, rgba(232, 170, 107, 0.05) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity var(--transition-slow);
+        }
+
+        .step-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow:
+                0 4px 8px rgba(95, 122, 97, 0.08),
+                0 12px 32px rgba(95, 122, 97, 0.12),
+                0 24px 48px rgba(95, 122, 97, 0.08),
+                inset 0 -1px 0 rgba(95, 122, 97, 0.06);
+            border-color: var(--primary-color);
+        }
+
+        .step-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .step-card:hover::after {
+            opacity: 1;
+        }
+
+        .step-card:hover .step-number {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow:
+                0 4px 12px rgba(95, 122, 97, 0.2),
+                0 8px 24px rgba(95, 122, 97, 0.15);
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--primary-color), #4D6350);
+            color: white;
+            border-radius: 50%;
+            font-size: 1.6rem;
+            font-weight: 700;
+            line-height: 64px;
+            margin-bottom: var(--space-md);
+            transition: all var(--transition-base);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .step-title {
+            font-family: 'Merriweather', serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 14px;
+        }
+
+        .step-description {
+            color: var(--text-medium);
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        /* Beta Program Section */
+        .beta-program {
+            background: linear-gradient(135deg,
+                rgba(232, 170, 107, 0.04) 0%,
+                rgba(95, 122, 97, 0.04) 100%);
+            padding: var(--space-3xl) var(--space-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .beta-program::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(232, 170, 107, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            filter: blur(60px);
+        }
+
+        .beta-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .beta-intro {
+            text-align: center;
+            margin-bottom: var(--space-2xl);
+        }
+
+        .beta-description {
+            font-size: 1.25rem;
+            color: var(--text-medium);
+            line-height: 1.75;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .beta-card {
+            background: var(--bg-light);
+            border-radius: var(--radius-xl);
+            padding: var(--space-2xl);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(95, 122, 97, 0.1);
+            margin-bottom: var(--space-xl);
+        }
+
+        .beta-icon {
+            text-align: center;
+            font-size: 3.5rem;
+            color: var(--accent-color);
+            margin-bottom: var(--space-lg);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .beta-title {
+            font-family: 'Merriweather', serif;
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            text-align: center;
+            margin-bottom: var(--space-xl);
+            font-weight: 700;
+        }
+
+        .beta-steps {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-lg);
+            margin-bottom: var(--space-xl);
+        }
+
+        .beta-step {
+            display: flex;
+            gap: var(--space-md);
+            align-items: flex-start;
+            padding: var(--space-lg);
+            background: rgba(95, 122, 97, 0.02);
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--primary-color);
+            transition: all var(--transition-base);
+        }
+
+        .beta-step:hover {
+            background: rgba(95, 122, 97, 0.04);
+            transform: translateX(8px);
+        }
+
+        .beta-step-number {
+            flex-shrink: 0;
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary-color), #4D6350);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            font-weight: 700;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .beta-step-content h4 {
+            font-family: 'Merriweather', serif;
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            margin-bottom: var(--space-xs);
+            font-weight: 600;
+        }
+
+        .beta-step-content p {
+            color: var(--text-medium);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .beta-notice {
+            display: flex;
+            gap: var(--space-md);
+            padding: var(--space-lg);
+            background: rgba(232, 170, 107, 0.08);
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(232, 170, 107, 0.2);
+            margin-bottom: var(--space-xl);
+        }
+
+        .beta-notice-icon {
+            flex-shrink: 0;
+            font-size: 1.5rem;
+            color: var(--accent-color);
+        }
+
+        .beta-notice-content h4 {
+            font-family: 'Merriweather', serif;
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            margin-bottom: var(--space-xs);
+            font-weight: 600;
+        }
+
+        .beta-notice-content p {
+            color: var(--text-medium);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .beta-cta {
+            text-align: center;
+            padding-top: var(--space-lg);
+            border-top: 1px solid rgba(95, 122, 97, 0.1);
+        }
+
+        .btn-beta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, var(--secondary-color), #C8654F);
+            color: white;
+            padding: 18px 40px;
+            border-radius: var(--radius-md);
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 4px 16px rgba(212, 115, 94, 0.3);
+            transition: all var(--transition-base);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-beta:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(212, 115, 94, 0.4);
+            background: linear-gradient(135deg, #C8654F, var(--secondary-color));
+        }
+
+        .btn-beta i {
+            font-size: 1.3rem;
+        }
+
+        .beta-note {
+            margin-top: var(--space-md);
+            color: var(--text-medium);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .beta-note i {
+            color: var(--accent-color);
+        }
+
+        .beta-benefits {
+            margin-top: var(--space-xl);
+        }
+
+        .beta-benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-lg);
+        }
+
+        @media (max-width: 980px) {
+            .beta-benefits-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .beta-benefits-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .beta-benefit {
+            text-align: center;
+            padding: var(--space-lg);
+            background: var(--bg-light);
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(95, 122, 97, 0.08);
+            transition: all var(--transition-base);
+        }
+
+        .beta-benefit:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-color);
+        }
+
+        .beta-benefit i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: var(--space-sm);
+        }
+
+        .beta-benefit h4 {
+            font-family: 'Merriweather', serif;
+            font-size: 1.15rem;
+            color: var(--text-dark);
+            margin-bottom: var(--space-xs);
+            font-weight: 600;
+        }
+
+        .beta-benefit p {
+            color: var(--text-medium);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Demo Section */
+        .demo {
+            background: linear-gradient(135deg, rgba(95, 122, 97, 0.04) 0%, rgba(232, 170, 107, 0.04) 100%);
+            border-top: 1px solid rgba(95, 122, 97, 0.1);
+            border-bottom: 1px solid rgba(95, 122, 97, 0.1);
+            position: relative;
+        }
+
+        .demo-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .demo-icon {
+            font-size: 4.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 30px;
+            animation: pulse 2s ease-in-out infinite;
+            filter: drop-shadow(0 4px 12px rgba(212, 115, 94, 0.3));
+            position: relative;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                filter: drop-shadow(0 4px 12px rgba(212, 115, 94, 0.3));
+            }
+            50% {
+                transform: scale(1.05);
+                filter: drop-shadow(0 8px 20px rgba(212, 115, 94, 0.4));
+            }
+        }
+
+        .demo-title {
+            font-family: 'Merriweather', serif;
+            font-size: 2.6rem;
+            color: var(--primary-color);
+            margin-bottom: 24px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .demo-description {
+            font-size: 1.25rem;
+            color: var(--text-medium);
+            line-height: 1.75;
+            margin-bottom: 0;
+        }
+
+        .demo-description a {
+            transition: all var(--transition-base);
+            position: relative;
+            display: inline-block;
+        }
+
+        .demo-description a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+            opacity: 0.5;
+            transition: all var(--transition-base);
+        }
+
+        .demo-description a:hover {
+            color: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        .demo-description a:hover::after {
+            opacity: 1;
+            height: 4px;
+            box-shadow: 0 2px 8px rgba(212, 115, 94, 0.3);
+        }
+
+        .coming-soon-badge {
+            display: inline-block;
+            background: var(--accent-color);
+            color: white;
+            padding: 12px 32px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 12px rgba(232, 170, 107, 0.3);
+        }
+
+        .report-toggle-btn {
+            background: linear-gradient(135deg, var(--primary-color), #4D6350);
+            color: white;
+            padding: 14px 32px;
+            border-radius: var(--radius-md);
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all var(--transition-base);
+            box-shadow: var(--shadow-sm);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .report-toggle-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            background: linear-gradient(135deg, #4D6350, var(--primary-color));
+        }
+
+        .report-toggle-btn i {
+            transition: transform var(--transition-base);
+        }
+
+        .report-toggle-btn[aria-expanded="true"] i {
+            transform: rotate(180deg);
+        }
+
+        /* Benefits Section */
+        .benefits {
+            background: linear-gradient(135deg,
+                rgba(232, 170, 107, 0.02) 0%,
+                rgba(95, 122, 97, 0.02) 100%);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 1100px) {
+            .benefits-grid {
+                grid-template-columns: repeat(2, 1fr);
+                max-width: 800px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .benefits-grid {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
+        }
+
+        .benefit-card {
+            background: var(--bg-light);
+            text-align: center;
+            padding: var(--space-xl) var(--space-lg);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(95, 122, 97, 0.08);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-base);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefit-card::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: var(--radius-lg);
+            opacity: 0;
+            z-index: -1;
+            transition: opacity var(--transition-base);
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-xl);
+            border-color: transparent;
+        }
+
+        .benefit-card:hover::after {
+            opacity: 0.1;
+        }
+
+        .benefit-icon {
+            font-size: 3.2rem;
+            color: var(--secondary-color);
+            margin-bottom: var(--space-md);
+            transition: all var(--transition-base);
+        }
+
+        .benefit-card:hover .benefit-icon {
+            transform: scale(1.1);
+            color: var(--primary-color);
+        }
+
+        .benefit-title {
+            font-family: 'Merriweather', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 14px;
+        }
+
+        .benefit-description {
+            color: var(--text-medium);
+            font-size: 1.08rem;
+            line-height: 1.7;
+        }
+
+        /* Sample Report Section */
+        .sample-report {
+            background: linear-gradient(135deg, rgba(95, 122, 97, 0.03) 0%, rgba(232, 170, 107, 0.03) 100%);
+            padding: 80px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sample-report::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            right: 5%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(232, 170, 107, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            filter: blur(40px);
+            animation: orb-drift 30s ease-in-out infinite;
+        }
+
+        .sample-report::after {
+            content: '';
+            position: absolute;
+            bottom: 15%;
+            left: 5%;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(95, 122, 97, 0.06) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            filter: blur(35px);
+            animation: orb-drift-reverse 35s ease-in-out infinite;
+        }
+
+        .report-card {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--bg-light);
+            border-radius: var(--radius-xl);
+            padding: var(--space-2xl);
+            box-shadow: var(--shadow-xl);
+            border: 1px solid rgba(95, 122, 97, 0.1);
+            transition: all var(--transition-base);
+        }
+
+        .report-card:hover {
+            box-shadow: var(--shadow-2xl);
+            transform: translateY(-4px);
+        }
+
+        .report-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid rgba(95, 122, 97, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .report-avatar {
+            font-size: 4rem;
+            color: var(--primary-color);
+        }
+
+        .report-info {
+            flex: 1;
+        }
+
+        .report-name {
+            font-family: 'Merriweather', serif;
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .report-date {
+            color: var(--text-medium);
+            font-size: 1.05rem;
+            margin: 0;
+        }
+
+        .report-section {
+            margin-bottom: 35px;
+        }
+
+        .report-section:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .report-section-title {
+            font-family: 'Merriweather', serif;
+            font-size: 1.3rem;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .report-text {
+            color: var(--text-dark);
+            font-size: 1.08rem;
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        .report-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .report-list li {
+            padding: 12px 0;
+            color: var(--text-dark);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            border-bottom: 1px solid rgba(95, 122, 97, 0.06);
+        }
+
+        .report-list li:last-child {
+            border-bottom: none;
+        }
+
+        .observation-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: 20px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all var(--transition-fast);
+            cursor: default;
+        }
+
+        .tag-positive {
+            background: rgba(95, 122, 97, 0.12);
+            color: var(--primary-color);
+            border: 1px solid rgba(95, 122, 97, 0.2);
+        }
+
+        .tag-positive:hover {
+            background: rgba(95, 122, 97, 0.18);
+            transform: translateY(-2px);
+        }
+
+        .tag-neutral {
+            background: rgba(232, 170, 107, 0.12);
+            color: #C8894D;
+            border: 1px solid rgba(232, 170, 107, 0.2);
+        }
+
+        .tag-neutral:hover {
+            background: rgba(232, 170, 107, 0.18);
+            transform: translateY(-2px);
+        }
+
+        .report-footer {
+            margin-top: 35px;
+            padding-top: 30px;
+            border-top: 2px solid rgba(95, 122, 97, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .report-card {
+                padding: 30px 25px;
+            }
+
+            .report-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .report-avatar {
+                font-size: 3rem;
+            }
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            background: var(--bg-light);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 35px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 980px) {
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+                max-width: 600px;
+            }
+        }
+
+        .testimonial-card {
+            background: var(--bg-light);
+            padding: var(--space-xl) var(--space-lg);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(95, 122, 97, 0.08);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-base);
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--secondary-color), var(--accent-color));
+            border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform var(--transition-base);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .testimonial-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .testimonial-quote {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            opacity: 0.3;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-text {
+            color: var(--text-dark);
+            font-size: 1.08rem;
+            line-height: 1.75;
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .testimonial-author strong {
+            color: var(--text-dark);
+            font-size: 1.1rem;
+        }
+
+        .testimonial-author span {
+            color: var(--text-medium);
+            font-size: 0.95rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #4D6350 100%);
+            color: var(--bg-cream);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(232, 170, 107, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .contact::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: -100px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(212, 115, 94, 0.12) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .contact .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact .section-title {
+            color: var(--bg-cream);
+            font-size: 2.6rem;
+        }
+
+        .contact-intro {
+            text-align: center;
+            font-size: 1.3rem;
+            margin-bottom: 50px;
+            color: var(--bg-cream);
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+
+        .contact-methods {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .contact-methods {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        .contact-method {
+            text-align: center;
+            padding: var(--space-xl) var(--space-lg);
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            transition: all var(--transition-base);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .contact-method:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .contact-method i {
+            font-size: 3.2rem;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+            transition: transform 0.3s ease;
+        }
+
+        .contact-method:hover i {
+            transform: scale(1.15);
+        }
+
+        .contact-method h3 {
+            font-family: 'Merriweather', serif;
+            font-size: 1.4rem;
+            margin-bottom: 16px;
+            font-weight: 600;
+            color: var(--bg-cream);
+        }
+
+        .contact-method a {
+            color: var(--bg-cream);
+            text-decoration: none;
+            font-size: 1.3rem;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 5px;
+            transition: all var(--transition-base);
+            font-weight: 600;
+            display: inline-block;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-method a:hover {
+            border-color: var(--bg-cream);
+            transform: translateY(-2px);
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            filter: drop-shadow(0 2px 8px rgba(232, 170, 107, 0.4));
+        }
+
+        /* FAQ Section */
+        .faq {
+            background: var(--bg-light);
+            padding: var(--space-3xl) var(--space-md);
+        }
+
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--bg-cream);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-md);
+            border: 1px solid rgba(95, 122, 97, 0.08);
+            overflow: hidden;
+            transition: all var(--transition-base);
+        }
+
+        .faq-item:hover {
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-md);
+        }
+
+        .faq-question {
+            width: 100%;
+            background: none;
+            border: none;
+            padding: var(--space-lg) var(--space-xl);
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Merriweather', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            transition: all var(--transition-base);
+            position: relative;
+        }
+
+        .faq-question:hover {
+            color: var(--primary-color);
+        }
+
+        .faq-question::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: var(--space-xl);
+            right: var(--space-xl);
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(95, 122, 97, 0.1), transparent);
+        }
+
+        .faq-icon {
+            font-size: 1.4rem;
+            color: var(--accent-color);
+            transition: all var(--transition-base);
+            flex-shrink: 0;
+            margin-left: var(--space-md);
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+            color: var(--primary-color);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height var(--transition-slow), padding var(--transition-slow);
+            padding: 0 var(--space-xl);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 var(--space-xl) var(--space-lg);
+        }
+
+        .faq-answer p {
+            color: var(--text-medium);
+            font-size: 1.05rem;
+            line-height: 1.75;
+            margin: 0;
+        }
+
+        .faq-answer ul {
+            margin: var(--space-sm) 0 0 var(--space-md);
+            color: var(--text-medium);
+            font-size: 1.05rem;
+            line-height: 1.75;
+        }
+
+        .faq-answer li {
+            margin-bottom: var(--space-xs);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--text-medium);
+            font-size: 0.98rem;
+        }
+
+        footer p {
+            margin-bottom: 12px;
+        }
+
+        .powered-by {
+            font-size: 0.92rem;
+            opacity: 0.75;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                font-size: 18px;
+            }
+
+            .logo {
+                font-size: 2.4rem;
+                gap: var(--space-sm);
+            }
+
+            .logo-image {
+                width: 75px;
+                height: 75px;
+            }
+
+            .tagline {
+                font-size: 1.5rem;
+            }
+
+            .subheading {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: var(--space-xl);
+            }
+
+            .intro-content {
+                font-size: 1.15rem;
+            }
+
+            section {
+                padding: var(--space-2xl) var(--space-md);
+            }
+
+            .demo-icon {
+                font-size: 3rem;
+            }
+
+            .demo-title {
+                font-size: 2rem;
+            }
+
+            .demo-description {
+                font-size: 1.1rem;
+            }
+
+            .coming-soon-badge {
+                font-size: 1rem;
+                padding: var(--space-xs) var(--space-lg);
+            }
+
+            .families-content {
+                padding: var(--space-xl) var(--space-lg);
+            }
+
+            .report-card {
+                padding: var(--space-xl) var(--space-md);
+            }
+
+            .contact-methods {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .step-card,
+            .benefit-card,
+            .availability-option,
+            .use-case-card,
+            .testimonial-card {
+                padding: var(--space-lg) var(--space-md);
+            }
+
+            /* Beta Section Mobile Styles */
+            .beta-description {
+                font-size: 1.1rem;
+            }
+
+            .beta-card {
+                padding: var(--space-lg) var(--space-md);
+            }
+
+            .beta-icon {
+                font-size: 2.5rem;
+            }
+
+            .beta-title {
+                font-size: 1.5rem;
+            }
+
+            .beta-step {
+                padding: var(--space-md);
+                gap: var(--space-sm);
+            }
+
+            .beta-step-number {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+                line-height: 40px;
+            }
+
+            .beta-step-content h4 {
+                font-size: 1.1rem;
+            }
+
+            .beta-step-content p {
+                font-size: 0.95rem;
+            }
+
+            .beta-notice {
+                padding: var(--space-md);
+                gap: var(--space-sm);
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .beta-notice-icon {
+                font-size: 1.2rem;
+            }
+
+            .beta-notice-content h4 {
+                font-size: 1rem;
+            }
+
+            .beta-notice-content p {
+                font-size: 0.9rem;
+            }
+
+            .btn-beta {
+                padding: 14px 28px;
+                font-size: 1.05rem;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .beta-benefit {
+                padding: var(--space-md);
+            }
+
+            .beta-benefit i {
+                font-size: 2rem;
+            }
+
+            .beta-benefit h4 {
+                font-size: 1.05rem;
+            }
+
+            .beta-benefit p {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Global Focus Styles for Accessibility */
+        *:focus-visible {
+            outline: 3px solid var(--accent-color);
+            outline-offset: 2px;
+        }
+
+        a:focus-visible {
+            outline: 2px solid var(--accent-color);
+            outline-offset: 4px;
+            border-radius: var(--radius-sm);
+        }
+
+        /* Loading animation for progressive enhancement */
+        @keyframes shimmer {
+            0% {
+                background-position: -1000px 0;
+            }
+            100% {
+                background-position: 1000px 0;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="container">
+            <h1 class="logo">
+                <img src="logo.png" alt="Lonesome No More Logo" class="logo-image">
+                Lonesome No More
+            </h1>
+            <p class="tagline">Companionship for your loved ones, peace of mind for you</p>
+            <p class="subheading">AI-powered conversations that keep your loved ones connected and families informed</p>
+        </div>
+    </header>
+
+    <!-- Introduction Section -->
+    <section class="intro">
+        <div class="container">
+            <p class="intro-content">
+                Lonesome No More provides personalized AI companionship through simple phone conversations.
+                We learn about your loved one's life story, interests, and preferences to create meaningful
+                conversations that feel genuine and personal. Perfect for long-distance families, busy caregivers,
+                and senior living facilities. Families stay connected through thoughtful
+                conversation summaries and gentle wellness insights.
+            </p>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Share Their Story</h3>
+                    <p class="step-description">
+                        Tell us about your loved one's background, interests, favorite topics, and life experiences. We'll use this to create truly personalized conversations.
+                    </p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Meaningful Conversations</h3>
+                    <p class="step-description">
+                        Choose from warm, friendly voices. LNM calls them regularly, remembers everything, asks thoughtful questions, and builds on previous chats.
+                    </p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Stay Connected</h3>
+                    <p class="step-description">
+                        Receive regular conversation summaries, topics discussed, and gentle wellness insights to stay connected to their daily life.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section class="demo">
+        <div class="container">
+            <div class="demo-content">
+                <div class="demo-icon">
+                    <i class="fas fa-headphones"></i>
+                </div>
+                <h2 class="demo-title">Try a Demo Conversation</h2>
+                <p class="demo-description" style="margin-bottom: 16px;">
+                    Experience firsthand how natural and engaging our AI companion can be.
+                </p>
+                <p class="demo-description" style="margin-bottom: 50px;">
+                    Use the widget below or call <a href="tel:+13158886838" style="color: var(--primary-color); font-weight: 700; text-decoration: none; border-bottom: 2px solid var(--secondary-color); padding-bottom: 2px;">(315) 888-6838</a> to chat with Sophie!
+                </p>
+            </div>
+            <div style="display: flex; justify-content: center; padding-bottom: 40px;">
+                <elevenlabs-convai agent-id="agent_4301ka6k5hnvf969wqdbpjf6paq3"></elevenlabs-convai>
+            </div>
+        </div>
+    </section>
+
+    <!-- Beta Program Section -->
+    <section class="beta-program">
+        <div class="container">
+            <h2 class="section-title">Join Our Beta Program</h2>
+            <div class="beta-content">
+                <div class="beta-intro">
+                    <p class="beta-description">
+                        We're looking for families to help us perfect Lonesome No More. As a beta participant, you'll get early access to our AI companion service and help shape the future of elderly care technology.
+                    </p>
+                </div>
+
+                <div class="beta-card">
+                    <div class="beta-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3 class="beta-title">How the Beta Works</h3>
+                    <div class="beta-steps">
+                        <div class="beta-step">
+                            <div class="beta-step-number">1</div>
+                            <div class="beta-step-content">
+                                <h4>Complete the Intake Form</h4>
+                                <p>Fill out our comprehensive questionnaire about your loved one's background, interests, and preferences. This helps us create truly personalized conversations.</p>
+                            </div>
+                        </div>
+                        <div class="beta-step">
+                            <div class="beta-step-number">2</div>
+                            <div class="beta-step-content">
+                                <h4>We'll Review & Contact You</h4>
+                                <p>Our team will review your submission and reach out within 2-3 business days to discuss next steps, answer questions, and schedule onboarding.</p>
+                            </div>
+                        </div>
+                        <div class="beta-step">
+                            <div class="beta-step-number">3</div>
+                            <div class="beta-step-content">
+                                <h4>Start Free Beta Service</h4>
+                                <p>As a beta participant, you'll receive free access to our service in exchange for your feedback and insights to help us improve.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="beta-notice">
+                        <div class="beta-notice-icon">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <div class="beta-notice-content">
+                            <h4>Beta Program Note</h4>
+                            <p>During the beta phase, some features like automated summaries and scheduling may not be available. We'll work with you directly to set up calls and gather feedback. Full details on beta functionality will be provided when we contact you.</p>
+                        </div>
+                    </div>
+
+                    <div class="beta-cta">
+                        <a href="beta-intake.html" class="btn-beta">
+                            <i class="fas fa-clipboard-list"></i>
+                            Complete Beta Intake Form
+                        </a>
+                        <p class="beta-note">
+                            <i class="fas fa-clock"></i>
+                            Takes 12-15 minutes • Save progress as you go
+                        </p>
+                    </div>
+                </div>
+
+                <div class="beta-benefits">
+                    <h3 style="text-align: center; font-family: 'Merriweather', serif; font-size: 1.5rem; margin-bottom: 30px; color: var(--text-dark);">Beta Participant Benefits</h3>
+                    <div class="beta-benefits-grid">
+                        <div class="beta-benefit">
+                            <i class="fas fa-gift"></i>
+                            <h4>Free Access</h4>
+                            <p>Full service at no cost during beta period</p>
+                        </div>
+                        <div class="beta-benefit">
+                            <i class="fas fa-users"></i>
+                            <h4>Direct Support</h4>
+                            <p>Priority access to our team for questions and feedback</p>
+                        </div>
+                        <div class="beta-benefit">
+                            <i class="fas fa-lightbulb"></i>
+                            <h4>Shape the Future</h4>
+                            <p>Your input directly influences product development</p>
+                        </div>
+                        <div class="beta-benefit">
+                            <i class="fas fa-tag"></i>
+                            <h4>Early Bird Pricing</h4>
+                            <p>Special discounted rates when we launch publicly</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits">
+        <div class="container">
+            <h2 class="section-title">Why Lonesome No More?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3 class="benefit-title">Truly Personalized</h3>
+                    <p class="benefit-description">
+                        Choose the perfect voice and personality. We learn their history, interests, and preferences to make every conversation genuinely meaningful and engaging.
+                    </p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3 class="benefit-title">Available 24/7</h3>
+                    <p class="benefit-description">
+                        Your loved one gets their own dedicated phone number. They can call anytime for a chat, or we can call them on a schedule. It's companionship on their terms.
+                    </p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-heart-pulse"></i>
+                    </div>
+                    <h3 class="benefit-title">Family Peace of Mind</h3>
+                    <p class="benefit-description">
+                        Stay connected with regular conversation summaries and gentle wellness insights. Know your loved one is never alone, even when you can't be there.
+                    </p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <h3 class="benefit-title">Effortlessly Simple</h3>
+                    <p class="benefit-description">
+                        Just a phone call - no apps, no computers, no learning curve. Works with any phone, anywhere, whenever they need a friendly conversation.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sample Report Section -->
+    <section class="sample-report">
+        <div class="container">
+            <h2 class="section-title">
+                Weekly Conversation Summary
+                <span class="coming-soon-badge" style="display: inline-block; font-size: 0.5em; vertical-align: middle; margin-left: 16px; background: var(--accent-color); padding: 8px 20px; border-radius: 20px; font-family: 'Inter', sans-serif; font-weight: 600; letter-spacing: 0.5px;">Coming Soon</span>
+            </h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto 30px; font-size: 1.15rem; color: var(--text-medium);">
+                Every week, receive a thoughtful summary of your loved one's conversations, helping you stay connected to their daily life.
+            </p>
+            <div style="text-align: center; margin-bottom: 30px;">
+                <button class="report-toggle-btn" onclick="toggleReportPreview()" aria-expanded="false">
+                    <span id="reportToggleText">Show Sample Report</span>
+                    <i class="fas fa-chevron-down" id="reportToggleIcon"></i>
+                </button>
+            </div>
+            <div class="report-card" id="reportPreview" style="display: none;">
+                <div class="report-header">
+                    <div class="report-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="report-info">
+                        <h3 class="report-name">Margaret's Weekly Summary</h3>
+                        <p class="report-date">January 8-14, 2025 • 6 conversations</p>
+                    </div>
+                </div>
+
+                <div class="report-section">
+                    <h4 class="report-section-title">
+                        <i class="fas fa-heart" style="color: var(--secondary-color); margin-right: 10px;"></i>
+                        Overall Mood & Wellbeing
+                    </h4>
+                    <p class="report-text">
+                        Margaret was in great spirits this week! She was particularly excited about her upcoming garden club meeting and mentioned feeling proud of her tomato plants. Energy levels were consistent, and she expressed gratitude for her daily calls.
+                    </p>
+                </div>
+
+                <div class="report-section">
+                    <h4 class="report-section-title">
+                        <i class="fas fa-comments" style="color: var(--accent-color); margin-right: 10px;"></i>
+                        Conversation Highlights
+                    </h4>
+                    <ul class="report-list">
+                        <li><strong>Family:</strong> Talked fondly about her grandson's basketball game and shared memories of teaching him to garden</li>
+                        <li><strong>Hobbies:</strong> Excited about starting a new mystery novel by her favorite author, Agatha Christie</li>
+                        <li><strong>Health:</strong> Mentioned her knee felt better after physical therapy, walked to the mailbox daily</li>
+                        <li><strong>Social:</strong> Looking forward to bridge club on Thursday and lunch with her friend Betty</li>
+                    </ul>
+                </div>
+
+                <div class="report-section">
+                    <h4 class="report-section-title">
+                        <i class="fas fa-clipboard-check" style="color: var(--primary-color); margin-right: 10px;"></i>
+                        Gentle Observations
+                    </h4>
+                    <div class="observation-tags">
+                        <span class="tag tag-positive">Sleeping well</span>
+                        <span class="tag tag-positive">Appetite good</span>
+                        <span class="tag tag-positive">Socially engaged</span>
+                        <span class="tag tag-neutral">Mentioned missing daughter's visit</span>
+                    </div>
+                </div>
+
+                <div class="report-footer">
+                    <p style="font-style: italic; color: var(--text-medium); margin: 0;">
+                        <i class="fas fa-info-circle" style="margin-right: 8px;"></i>
+                        This is a sample report. Actual reports are personalized based on your loved one's conversations.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">What Families Are Saying</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <p class="testimonial-text">
+                        "Since Mom started using Lonesome No More, she's so much happier. She talks about her conversations with Sophie like she's a real friend. And the weekly summaries help me stay connected even though I live 2,000 miles away."
+                    </p>
+                    <div class="testimonial-author">
+                        <strong>Sarah M.</strong>
+                        <span>Daughter & Long-Distance Caregiver</span>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <p class="testimonial-text">
+                        "We introduced LNM to our assisted living facility and the residents love it. It's like having a companion available 24/7. Families appreciate the conversation insights, and we've seen improved mood across the board."
+                    </p>
+                    <div class="testimonial-author">
+                        <strong>David T.</strong>
+                        <span>Activities Director, Sunrise Senior Living</span>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <p class="testimonial-text">
+                        "Dad was skeptical at first, but now he looks forward to his daily chats. The AI remembers his stories and asks thoughtful follow-up questions. It's honestly amazing how natural it feels."
+                    </p>
+                    <div class="testimonial-author">
+                        <strong>Jennifer L.</strong>
+                        <span>Daughter & Primary Caregiver</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>How does Lonesome No More work?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>It's simple! After you share your loved one's interests, background, and preferences, we assign them a dedicated phone number. They can call anytime for a friendly chat, or we can call them on a schedule that works best. Our AI companion remembers everything from previous conversations, asks thoughtful questions, and creates genuinely engaging discussions. You receive weekly summaries of their conversations and gentle wellness insights.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Is my loved one's information secure and private?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Absolutely. We take privacy and security very seriously. All conversations are encrypted, and personal information is stored securely in compliance with industry standards. We never share or sell your loved one's data. Conversation summaries are only accessible to family members you designate.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Can they really call anytime, 24/7?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes! Each loved one receives their own dedicated phone number that's available 24 hours a day, 7 days a week. Whether it's 2 AM and they can't sleep, or they just want to chat during the day, their AI companion is always ready for a conversation. There's no waiting, no appointments needed.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>What if my loved one isn't comfortable with technology?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>That's the beauty of Lonesome No More - it's just a phone call! No apps to download, no computers to learn, no buttons to press beyond making a simple phone call. If they can use a telephone, they can use our service. The conversation feels completely natural and human.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>How natural do the conversations sound?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Our AI uses state-of-the-art voice technology, making conversations sound remarkably natural and warm. The AI companion remembers details from previous calls, asks follow-up questions, and responds appropriately to emotion and context. Try our demo above to experience it yourself - most people are amazed by how genuine it feels!</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Can I customize the voice and conversation topics?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes! During onboarding, you can choose from several warm, friendly voices and provide information about your loved one's interests, hobbies, family history, and preferred conversation topics. The AI uses this to create personalized, meaningful conversations that reflect their unique life and preferences.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>What kind of insights will I receive?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>You'll receive weekly conversation summaries that include conversation highlights, mood observations, topics discussed, and gentle wellness notes (like mentions of sleep quality, social activities, or health comments). These summaries help you stay connected to their daily life and spot any concerns early, while respecting their privacy.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>How much does it cost?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>We're currently in beta and finalizing our pricing plans. We're committed to making this service affordable and accessible for families. Interested in learning more? Contact us at <a href="mailto:lnm@vaspian.com" style="color: var(--primary-color); text-decoration: underline;">hello@lonesomenomore.com</a> or call <a href="tel:+18338174646" style="color: var(--primary-color); text-decoration: underline;">(833) 817-4646</a> to discuss options.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact">
+        <div class="container">
+            <h2 class="section-title">Interested in Learning More?</h2>
+            <p class="contact-intro">
+                We're building something special and would love to hear from you
+            </p>
+            <div class="contact-methods">
+                <div class="contact-method">
+                    <i class="fas fa-envelope"></i>
+                    <h3>Email Us</h3>
+                    <a href="mailto:lnm@vaspian.com">hello@lonesomenomore.com</a>
+                </div>
+                <div class="contact-method">
+                    <i class="fas fa-phone-alt"></i>
+                    <h3>Call Us</h3>
+                    <a href="tel:+18338174646">(833) 817-4646</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Lonesome No More. All rights reserved.</p>
+            <p class="powered-by">
+                A family-owned labor of <span style="color: #D4735E;">❤️</span> • Built in Buffalo, NY
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for any future anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add fade-in animation on scroll (optional enhancement)
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe sections for fade-in effect
+        document.querySelectorAll('section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+            observer.observe(section);
+        });
+
+        // Premium parallax effect for hero
+        let heroSection = document.querySelector('.hero');
+        if (heroSection) {
+            window.addEventListener('scroll', () => {
+                let scrolled = window.pageYOffset;
+                let rate = scrolled * 0.3;
+
+                if (scrolled < window.innerHeight) {
+                    heroSection.style.transform = `translateY(${rate}px)`;
+                    heroSection.style.opacity = 1 - (scrolled / window.innerHeight) * 0.3;
+                }
+            });
+        }
+
+        // Staggered card animations
+        const cardObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0) scale(1)';
+                    }, index * 50);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        });
+
+        // Observe all cards for stagger animation
+        setTimeout(() => {
+            document.querySelectorAll('.step-card, .benefit-card, .use-case-card, .availability-option, .testimonial-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px) scale(0.95)';
+                card.style.transition = 'opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                cardObserver.observe(card);
+            });
+        }, 100);
+
+        // Scroll Progress Indicator
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('scrollProgress').style.width = scrolled + '%';
+        });
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const faqItem = button.parentElement;
+                const isActive = faqItem.classList.contains('active');
+
+                // Close all other FAQs
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                    item.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+                });
+
+                // Toggle current FAQ
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                    button.setAttribute('aria-expanded', 'true');
+                }
+            });
+        });
+
+        // Sample Report Toggle
+        function toggleReportPreview() {
+            const reportPreview = document.getElementById('reportPreview');
+            const toggleBtn = document.querySelector('.report-toggle-btn');
+            const toggleText = document.getElementById('reportToggleText');
+            const toggleIcon = document.getElementById('reportToggleIcon');
+            const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+
+            if (isExpanded) {
+                // Collapse
+                reportPreview.style.display = 'none';
+                toggleBtn.setAttribute('aria-expanded', 'false');
+                toggleText.textContent = 'Show Sample Report';
+            } else {
+                // Expand
+                reportPreview.style.display = 'block';
+                toggleBtn.setAttribute('aria-expanded', 'true');
+                toggleText.textContent = 'Hide Sample Report';
+
+                // Smooth scroll to report
+                setTimeout(() => {
+                    reportPreview.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 100);
+            }
+        }
+    </script>
+
+    <!-- ElevenLabs ConvAI Widget -->
+    <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+</body>
+</html>
