@@ -45,11 +45,26 @@ function createTables() {
       last_name TEXT,
       nickname TEXT,
       age INTEGER,
+      gender TEXT,
       phone_number TEXT,
       location TEXT,
-      life_story TEXT,
+
+      -- Rich profile data for system prompt generation
+      personality TEXT,
+      communication_style TEXT,
+      backstory TEXT,
       interests TEXT,
+      core_values TEXT,
+      current_situation TEXT,
+      people_who_matter TEXT,
+      conversation_hooks TEXT,
       health_info TEXT,
+
+      -- Safety & contacts
+      safety_contact_name TEXT,
+      safety_contact_phone TEXT,
+      safety_contact_relationship TEXT,
+
       communication_preferences TEXT,
       created_at TEXT DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (user_id) REFERENCES users(id)
@@ -87,31 +102,97 @@ function createTables() {
 // Seed mock data
 function seedMockData() {
   const userId = 'user_1';
-  const lovedOneId = 'loved_789xyz';
 
   db.run(
     `INSERT INTO users (id, email, first_name, last_name) VALUES (?, ?, ?, ?)`,
     [userId, 'test@lonesomenomore.com', 'Test', 'User']
   );
 
+  // Harold Whitaker - Quiet, guarded, retired factory worker
   db.run(
-    `INSERT INTO loved_ones (id, user_id, first_name, last_name, nickname, age, phone_number, location, life_story, interests)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    `INSERT INTO loved_ones (
+      id, user_id, first_name, last_name, nickname, age, gender, phone_number, location,
+      personality, communication_style, backstory, interests, core_values, current_situation,
+      people_who_matter, conversation_hooks, health_info,
+      safety_contact_name, safety_contact_phone, safety_contact_relationship
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
-      lovedOneId,
+      'harold_123',
+      userId,
+      'Harold',
+      'Whitaker',
+      'Harold',
+      75,
+      'male',
+      '(716) 555-0142',
+      'North Buffalo, NY',
+      'Quiet, guarded, self-reliant. Prefers routine and calm. Slow to open up but loyal once trust is built.',
+      'Slow pacing, short sentences, dry humor. Prefers concrete topics over emotional ones. Needs space between thoughts.',
+      'Grew up in Jamestown, NY. Worked assembly line, became foreman at tool-and-die factory. Army mechanic 1964-1966. Married Helen (deceased 2019). Lives alone since.',
+      JSON.stringify(['Old radio repair', 'Detective shows (Columbo, Perry Mason)', 'Buffalo weather', 'Factory stories', 'Army memories']),
+      'Self-reliance, honesty, quiet dignity, dislikes fuss',
+      'Lives alone in upstairs walk-up. Limited mobility due to pain. Most days spent indoors watching TV. Minimal social contact. Clearest mentally 10-11 AM.',
+      JSON.stringify([
+        {name: 'Helen', relation: 'deceased wife', note: 'Warm early memories only'},
+        {name: 'Jason Whitaker', relation: 'son', note: 'Lives in Chicago, infrequent contact'},
+        {name: 'Marty', relation: 'old coworker', note: 'deceased'}
+      ]),
+      JSON.stringify([
+        'Did you ever fix radios in winter when the snow piled up?',
+        'What was it like in the shop when things were busy?',
+        'Tell me about Marty - what was he like?',
+        'How\'s the cold treating you up there?'
+      ]),
+      'Mobility pain, limited outings. No major diagnosed conditions mentioned.',
+      'Jason Whitaker',
+      '716-295-3647',
+      'son'
+    ]
+  );
+
+  // Mary Smith - Warm, chatty, retired teacher
+  db.run(
+    `INSERT INTO loved_ones (
+      id, user_id, first_name, last_name, nickname, age, gender, phone_number, location,
+      personality, communication_style, backstory, interests, core_values, current_situation,
+      people_who_matter, conversation_hooks, health_info,
+      safety_contact_name, safety_contact_phone, safety_contact_relationship
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [
+      'loved_789xyz',
       userId,
       'Mary',
       'Smith',
       'Mom',
       75,
+      'female',
       '(555) 987-6543',
       'Phoenix, AZ',
-      'Elementary school teacher for 35 years. Loves gardening and spending time with family.',
-      JSON.stringify(['Gardening', 'Reading', 'Family'])
+      'Warm, friendly, chatty. Loves sharing stories. Optimistic and family-oriented. Enjoys keeping busy with hobbies.',
+      'Friendly and upbeat. Likes to share details. Appreciates follow-up questions. Comfortable with longer conversations.',
+      'Elementary school teacher for 35 years. Raised 4 children. Lost husband 5 years ago. Active in community volunteering. Enjoys gardening and knitting.',
+      JSON.stringify(['Gardening', 'Knitting', 'Reading mystery novels', 'Watching Jeopardy', 'Classic movies', 'Frank Sinatra music']),
+      'Family first, community service, staying active, lifelong learning',
+      'Lives independently in Phoenix. Active with garden and hobbies. Regular family calls. Socially engaged with neighbors. Watches Jeopardy daily.',
+      JSON.stringify([
+        {name: 'Children', relation: 'family', note: '4 children, regular contact'},
+        {name: 'Neighbor friends', relation: 'community', note: 'Active social circle'},
+        {name: 'Late husband', relation: 'deceased spouse', note: 'Warm memories, passed 5 years ago'}
+      ]),
+      JSON.stringify([
+        'How is your garden doing this season?',
+        'What are you knitting these days?',
+        'Did you catch Jeopardy yesterday?',
+        'Tell me about your grandchildren'
+      ]),
+      'Type 2 diabetes (managed), arthritis, uses cane for longer walks. Overall good health.',
+      'Sarah (daughter)',
+      '602-555-0198',
+      'daughter'
     ]
   );
 
-  console.log('✅ Mock data seeded');
+  console.log('✅ Mock data seeded (Harold & Mary)');
 }
 
 // Save database to file

@@ -106,7 +106,11 @@ const API_URL = 'https://granular-ramonita-orthoptic.ngrok-free.dev';
 async function apiCall(endpoint: string, options: RequestInit = {}) {
   const response = await fetch(`${API_URL}${endpoint}`, {
     ...options,
-    headers: { 'Content-Type': 'application/json', ...options.headers },
+    headers: {
+      'Content-Type': 'application/json',
+      'ngrok-skip-browser-warning': 'true',
+      ...options.headers
+    },
   });
   return response.json();
 }

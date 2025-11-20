@@ -36,9 +36,29 @@ const MOCK_USER = {
 app.use(cors());
 app.use(express.json());
 
-// Simple logging middleware
+// Enhanced logging middleware
 app.use((req, res, next) => {
-  console.log(`${req.method} ${req.path}`);
+  const timestamp = new Date().toISOString();
+  const method = req.method;
+  const path = req.path;
+  const query = Object.keys(req.query).length > 0 ? JSON.stringify(req.query) : '';
+
+  console.log('\n' + '='.repeat(80));
+  console.log(`🕐 ${timestamp}`);
+  console.log(`📨 ${method} ${path}${query ? ' ?' + query : ''}`);
+
+  if (req.body && Object.keys(req.body).length > 0) {
+    console.log('📦 Request Body:', JSON.stringify(req.body, null, 2));
+  }
+
+  // Intercept response to log it
+  const originalJson = res.json.bind(res);
+  res.json = function(body) {
+    console.log(`📤 Response [${res.statusCode}]:`, JSON.stringify(body, null, 2));
+    console.log('='.repeat(80));
+    return originalJson(body);
+  };
+
   next();
 });
 
@@ -110,6 +130,26 @@ app.post('/auth/logout', mockAuth, (req, res) => {
   });
 });
 
+// ==================== LOVED ONES ENDPOINT ====================
+
+// GET /loved-ones - Get all loved ones for dropdown
+app.get('/loved-ones', mockAuth, (req, res) => {
+  const lovedOnes = getLovedOnesByUser(req.user.id);
+
+  res.json({
+    success: true,
+    lovedOnes: lovedOnes.map(l => ({
+      id: l.id,
+      firstName: l.first_name,
+      lastName: l.last_name,
+      nickname: l.nickname,
+      age: l.age,
+      location: l.location,
+      personality: l.personality?.substring(0, 100) + '...' || null
+    }))
+  });
+});
+
 // ==================== CHAT ENDPOINT ====================
 
 // POST /api/chat - Chat with LLM
@@ -128,8 +168,11 @@ app.post('/api/chat', mockAuth, async (req, res) => {
     }
 
     // Get loved one profile for context
+    // Priority: 1) systemPrompt from request, 2) systemPromptFile, 3) build from lovedOne profile
     let finalSystemPrompt = systemPrompt || '';
-    if (lovedOneId) {
+
+    // Only build from profile if no systemPrompt was provided
+    if (!finalSystemPrompt && lovedOneId) {
       const lovedOne = getLovedOne(lovedOneId);
       if (lovedOne) {
         finalSystemPrompt = buildSystemPromptFromProfile(lovedOne);
@@ -474,6 +517,7 @@ app.listen(PORT, () => {
   console.log('\n✅ Available endpoints:');
   console.log('   POST /auth/login');
   console.log('   GET  /auth/me');
+  console.log('   GET  /loved-ones');
   console.log('   POST /api/chat');
   console.log('   GET  /dashboard/summary');
   console.log('   GET  /conversations');

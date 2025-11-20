@@ -92,53 +92,138 @@ export async function chatWithLLM(messages, options = {}) {
 }
 
 /**
- * Build system prompt from loved one profile
- * @param {Object} lovedOneProfile - Profile data
- * @returns {string} - System prompt
+ * Build rich system prompt from loved one profile
+ * @param {Object} profile - Full profile data from database
+ * @returns {string} - Comprehensive system prompt
  */
-export function buildSystemPromptFromProfile(lovedOneProfile) {
-  if (!lovedOneProfile) return '';
+export function buildSystemPromptFromProfile(profile) {
+  if (!profile) return '';
 
-  const { first_name, nickname, interests, life_story } = lovedOneProfile;
-
-  let prompt = `You are a warm, friendly AI companion having a conversation with ${first_name}`;
-
-  if (nickname) {
-    prompt += ` (who prefers to be called ${nickname})`;
-  }
-
-  prompt += '.\n\n';
-
-  if (life_story) {
+  const parseJSON = (field) => {
     try {
-      const story = typeof life_story === 'string' ? JSON.parse(life_story) : life_story;
-      prompt += `Background: ${story.career || ''}\n`;
-      prompt += `Achievements: ${story.achievements || ''}\n\n`;
-    } catch (e) {
-      if (typeof life_story === 'string') {
-        prompt += `Background: ${life_story}\n\n`;
-      }
+      return typeof field === 'string' ? JSON.parse(field) : field;
+    } catch {
+      return field;
+    }
+  };
+
+  const interests = parseJSON(profile.interests) || [];
+  const people = parseJSON(profile.people_who_matter) || [];
+  const hooks = parseJSON(profile.conversation_hooks) || [];
+
+  let prompt = `# AI Companion for ${profile.first_name} ${profile.last_name}\n\n`;
+
+  // Role & Mission
+  prompt += `## ROLE & MISSION\n\n`;
+  prompt += `You are a caring AI companion for **${profile.first_name}`;
+  if (profile.nickname && profile.nickname !== profile.first_name) {
+    prompt += ` (${profile.nickname})`;
+  }
+  prompt += `**.\n\n`;
+  prompt += `Your mission is to provide warm, steady companionship that reduces isolation and brings meaningful conversation into their day.\n\n`;
+
+  // Personality & Communication
+  if (profile.personality || profile.communication_style) {
+    prompt += `## PERSONALITY & COMMUNICATION\n\n`;
+
+    if (profile.personality) {
+      prompt += `**Their Personality:**\n${profile.personality}\n\n`;
+    }
+
+    if (profile.communication_style) {
+      prompt += `**Communication Style to Match:**\n${profile.communication_style}\n\n`;
     }
   }
 
-  if (interests) {
-    try {
-      const interestsList = typeof interests === 'string' ? JSON.parse(interests) : interests;
-      if (Array.isArray(interestsList)) {
-        prompt += `Interests: ${interestsList.join(', ')}\n\n`;
-      }
-    } catch (e) {
-      // Ignore parsing errors
-    }
+  // Background
+  if (profile.backstory) {
+    prompt += `## BACKGROUND\n\n`;
+    prompt += `${profile.backstory}\n\n`;
   }
 
-  prompt += `Guidelines:
-- Be warm, patient, and genuinely interested
-- Ask about their day and interests
-- Share engaging stories when appropriate
-- Keep responses conversational and natural
-- Be respectful and considerate
-- Listen actively and remember previous conversation topics`;
+  // Interests
+  if (interests.length > 0) {
+    prompt += `## INTERESTS & PASSIONS\n\n`;
+    if (Array.isArray(interests)) {
+      interests.forEach(interest => prompt += `- ${interest}\n`);
+    } else {
+      prompt += `${interests}\n`;
+    }
+    prompt += `\n`;
+  }
+
+  // Values
+  if (profile.core_values) {
+    prompt += `## VALUES\n\n`;
+    prompt += `${profile.core_values}\n\n`;
+  }
+
+  // Current Situation
+  if (profile.current_situation) {
+    prompt += `## CURRENT SITUATION\n\n`;
+    prompt += `${profile.current_situation}\n\n`;
+  }
+
+  // People Who Matter
+  if (people.length > 0) {
+    prompt += `## IMPORTANT PEOPLE\n\n`;
+    people.forEach(person => {
+      prompt += `**${person.name}** (${person.relation})`;
+      if (person.note) prompt += `: ${person.note}`;
+      prompt += `\n`;
+    });
+    prompt += `\n`;
+  }
+
+  // Health Info
+  if (profile.health_info) {
+    prompt += `## HEALTH CONTEXT\n\n`;
+    prompt += `${profile.health_info}\n\n`;
+    prompt += `*Note: Never diagnose or give medical advice. Show concern and suggest they speak with their doctor if needed.*\n\n`;
+  }
+
+  // Conversation Hooks
+  if (hooks.length > 0) {
+    prompt += `## CONVERSATION STARTERS\n\n`;
+    prompt += `Use these to encourage engagement:\n`;
+    hooks.forEach(hook => prompt += `- "${hook}"\n`);
+    prompt += `\n`;
+  }
+
+  // Safety Contact
+  if (profile.safety_contact_name) {
+    prompt += `## SAFETY CONTACT\n\n`;
+    prompt += `**Primary Contact:** ${profile.safety_contact_name} (${profile.safety_contact_relationship})\n`;
+    prompt += `**Phone:** ${profile.safety_contact_phone}\n\n`;
+    prompt += `**Alert immediately if ${profile.first_name}:**\n`;
+    prompt += `- Mentions falling, injury, or severe pain\n`;
+    prompt += `- Expresses suicidal thoughts\n`;
+    prompt += `- Appears severely disoriented or confused\n`;
+    prompt += `- Mentions not eating for multiple days\n`;
+    prompt += `- Says they are in danger\n\n`;
+  }
+
+  // Guidelines
+  prompt += `## GUIDELINES\n\n`;
+  prompt += `**DO:**\n`;
+  prompt += `- Match their communication style and pacing\n`;
+  prompt += `- Build trust gradually and naturally\n`;
+  prompt += `- Reference familiar interests and people\n`;
+  prompt += `- Leave space for pauses and silence\n`;
+  prompt += `- Encourage voluntary storytelling without pressure\n`;
+  prompt += `- Validate their experiences and feelings\n`;
+  prompt += `- Keep conversations grounded in concrete, familiar topics\n\n`;
+
+  prompt += `**DON'T:**\n`;
+  prompt += `- Be overly cheerful or bouncy if that doesn't match their style\n`;
+  prompt += `- Push emotional intensity\n`;
+  prompt += `- Force conversation when they withdraw\n`;
+  prompt += `- Pry into sensitive topics\n`;
+  prompt += `- Give medical advice\n`;
+  prompt += `- Overwhelm with rapid questions\n`;
+  prompt += `- Make them feel pitied\n\n`;
+
+  prompt += `**Remember:** Every conversation should feel personal, respectful, and genuine. You are a steady, caring presence in their day.`;
 
   return prompt;
 }
